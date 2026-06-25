@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0D0D0F">
+  <title>Juche TV Korean Central Television Status</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    :root {
+      --bg: #0D0D0F;
+      --surface: #16161A;
+      --surface2: #1E1E24;
+      --border: rgba(255,255,255,0.07);
+      --border-bright: rgba(255,255,255,0.13);
+      --primary: #F5F5F7;
+      --secondary: #8A8A96;
+      --tertiary: #3A3A44;
+      --red: #FF3B30;
+      --green: #30D158;
+      --blue: #0A84FF;
+      --yellow: #FFD60A;
+      --tint: #FF2D55;
+      --tint2: #FF6B35;
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 22px;
+      --radius-xl: 28px;
+    }
+
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+      background: var(--bg);
+      color: var(--primary);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─── MAIN SCROLL ─── */
+    .main {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 20px 16px 100px;
+    }
+
+    /* ─── HERO SECTION ─── */
+    .hero {
+      margin-bottom: 24px;
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--tint);
+      margin-bottom: 6px;
+    }
+    .hero h1 {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.7px;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .hero p {
+      font-size: 13px;
+      color: var(--secondary);
+      line-height: 1.6;
+    }
+
+    /* ─── PROVIDER CARD ─── */
+    .provider-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      border: 0.5px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .provider-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(255,45,85,0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .provider-card:hover::after { opacity: 1; }
+    .provider-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--secondary);
+      margin-bottom: 8px;
+    }
+    .provider-text {
+      font-size: 14px;
+      color: var(--primary);
+      line-height: 1.5;
+    }
+    .provider-text a {
+      color: var(--tint);
+      text-decoration: none;
+      font-weight: 700;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .provider-text a:hover {
+      color: var(--tint2);
+      text-decoration: underline;
+    }
+
+    /* ─── STATUS SECTION ─── */
+    .status-section {
+      margin-bottom: 28px;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      color: var(--secondary);
+      margin-bottom: 10px;
+      padding-left: 4px;
+    }
+
+    /* ─── STATUS CARD ─── */
+    .status-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 10px;
+      border: 0.5px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    }
+    .status-card:hover {
+      border-color: rgba(255,45,85,0.3);
+      box-shadow: 0 0 0 1px rgba(255,45,85,0.18), 0 8px 32px rgba(0,0,0,0.35);
+    }
+    .status-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(255,45,85,0.07), transparent);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .status-card:hover::after { opacity: 1; }
+
+    .status-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .status-icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      background: var(--surface2);
+      border: 0.5px solid var(--border);
+    }
+    .status-icon img {
+      width: 32px; height: 32px;
+      object-fit: contain;
+    }
+    .status-title-group { flex: 1; }
+    .status-title-group h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 3px;
+      letter-spacing: -0.2px;
+    }
+    .status-title-group p {
+      font-size: 12px;
+      color: var(--secondary);
+    }
+
+    /* ─── BADGES ─── */
+    .badge-row { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 10px; font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 100px;
+      letter-spacing: 0.3px;
+    }
+    .badge-live { background: rgba(48,209,88,0.14); color: var(--green); border: 0.5px solid rgba(48,209,88,0.25); }
+    .badge-hd { background: rgba(10,132,255,0.14); color: var(--blue); border: 0.5px solid rgba(10,132,255,0.25); }
+    .badge-offline { background: rgba(255,59,48,0.1); color: var(--red); border: 0.5px solid rgba(255,59,48,0.2); }
+    .badge-loading { background: rgba(255,214,10,0.13); color: var(--yellow); border: 0.5px solid rgba(255,214,10,0.28); }
+    .badge-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    /* ─── STATS GRID ─── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .stat-item {
+      background: var(--surface2);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      border: 0.5px solid var(--border);
+    }
+    .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .stat-value {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.3px;
+    }
+    .stat-value.online { color: var(--green); }
+    .stat-value.offline { color: var(--red); }
+    .stat-value.warn { color: var(--yellow); }
+
+    /* ─── RECORDING INFO ─── */
+    .recording-info {
+      background: var(--surface2);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      margin-top: 12px;
+      border: 0.5px solid var(--border);
+    }
+    .recording-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--tertiary);
+      margin-bottom: 8px;
+    }
+    .recording-file {
+      font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+      font-size: 11px;
+      color: var(--primary);
+      line-height: 1.5;
+      word-break: break-all;
+    }
+
+    /* ─── LOADING STATE ─── */
+    .skeleton {
+      background: linear-gradient(90deg, var(--surface2) 25%, var(--surface) 50%, var(--surface2) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 8px;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ─── ERROR STATE ─── */
+    .error-card {
+      background: rgba(255,59,48,0.08);
+      border: 0.5px solid rgba(255,59,48,0.2);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      text-align: center;
+    }
+    .error-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--red);
+      margin-bottom: 6px;
+    }
+    .error-card p {
+      font-size: 13px;
+      color: var(--secondary);
+    }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 16px 20px 8px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--tertiary);
+      line-height: 1.8;
+    }
+
+    /* ─── BOTTOM TAB BAR ─── */
+    .tab-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 200;
+      background: rgba(22,22,26,0.92);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      border-top: 0.5px solid var(--border);
+      padding: 10px 0 24px;
+    }
+    .tab-bar-inner {
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+    }
+    .tab-item {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      font-size: 10px; font-weight: 600;
+      color: var(--secondary);
+      cursor: pointer;
+      transition: color 0.2s;
+      padding: 2px 16px;
+      text-decoration: none;
+      letter-spacing: 0.2px;
+    }
+    .tab-item.active { color: var(--tint); }
+    .tab-item svg { width: 22px; height: 22px; }
+    .tab-item:hover { color: var(--primary); }
+
+    /* ─── ANIMATIONS ─── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(14px);
+      animation: fadeUp 0.55s cubic-bezier(0.4,0,0.2,1) forwards;
+    }
+    @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+    .d1{animation-delay:.05s}.d2{animation-delay:.1s}.d3{animation-delay:.15s}
+    .d4{animation-delay:.2s}.d5{animation-delay:.25s}.d6{animation-delay:.3s}
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 4px; }
+
+    /* ─── REFRESH BUTTON ─── */
+    .refresh-btn {
+      background: var(--surface2);
+      border: 0.5px solid var(--border);
+      color: var(--secondary);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+    }
+    .refresh-btn:hover {
+      background: var(--border-bright);
+      color: var(--primary);
+    }
+    .refresh-btn svg { width: 14px; height: 14px; }
+    .refresh-btn.spinning svg { animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Hero -->
+    <div class="hero fade-in d1">
+      <div class="hero-eyebrow">System Status</div>
+      <h1>KCTV Status</h1>
+      <p>Real-time server and stream statistics for Korean Central Television.</p>
+    </div>
+
+    <!-- Provider Info -->
+    <div class="provider-card fade-in d2">
+      <div class="provider-label">Infrastructure Provider</div>
+      <div class="provider-text">
+        Provided by <a href="https://koryofront.org" target="_blank" rel="noopener noreferrer">KoryoFront</a> with support from the South Africa server network.
+      </div>
+    </div>
+
+    <!-- Status Section -->
+    <div class="status-section">
+      <div class="section-label fade-in d3">Live Statistics</div>
+
+      <div id="status-container" class="fade-in d3">
+        <!-- Loading State -->
+        <div class="status-card" id="loading-card">
+          <div class="status-header">
+            <div class="status-icon">
+              <div class="skeleton" style="width:32px;height:32px;border-radius:8px;"></div>
+            </div>
+            <div class="status-title-group">
+              <div class="skeleton" style="width:140px;height:16px;margin-bottom:6px;"></div>
+              <div class="skeleton" style="width:100px;height:12px;"></div>
+            </div>
+          </div>
+          <div class="badge-row">
+            <span class="badge badge-loading"><span class="badge-dot"></span>Loading</span>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="skeleton" style="width:60px;height:11px;margin-bottom:8px;"></div>
+              <div class="skeleton" style="width:40px;height:20px;"></div>
+            </div>
+            <div class="stat-item">
+              <div class="skeleton" style="width:60px;height:11px;margin-bottom:8px;"></div>
+              <div class="skeleton" style="width:40px;height:20px;"></div>
+            </div>
+            <div class="stat-item">
+              <div class="skeleton" style="width:60px;height:11px;margin-bottom:8px;"></div>
+              <div class="skeleton" style="width:40px;height:20px;"></div>
+            </div>
+            <div class="stat-item">
+              <div class="skeleton" style="width:60px;height:11px;margin-bottom:8px;"></div>
+              <div class="skeleton" style="width:40px;height:20px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center;">
+        <button class="refresh-btn" id="refresh-btn" onclick="fetchStats()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+          Refresh Data
+        </button>
+      </div>
+    </div>
+
+    <footer class="footer">
+      &copy; Juche TV &mdash; Not affiliated with any broadcasting entity.<br>
+      Data provided by <a href="https://koryofront.org" style="color:var(--tertiary);text-decoration:none;">KoryoFront</a>. Streams owned by Juche TV / Bloxy Play Comprehensive Channel and Koryo Front.
+    </footer>
+  </main>
+
+  <!-- Bottom Tab Bar -->
+  <div class="tab-bar">
+    <div class="tab-bar-inner">
+      <a href="index.html" class="tab-item">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        Home
+      </a>
+      <a href="schedules.html" class="tab-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="3"/>
+          <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        Schedule
+      </a>
+      <a href="Magazine.html" class="tab-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+        Magazines
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = 'https://juche-tv-epg-api.vercel.app/api/stats';
+
+    const container = document.getElementById('status-container');
+    const refreshBtn = document.getElementById('refresh-btn');
+
+    function formatNumber(num) {
+      if (num === null || num === undefined) return '—';
+      if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+      if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+      return num.toString();
+    }
+
+    function formatDuration(seconds) {
+      if (seconds === null || seconds === undefined) return '—';
+      const h = Math.floor(seconds / 3600);
+      const m = Math.floor((seconds % 3600) / 60);
+      const s = Math.floor(seconds % 60);
+      if (h > 0) return `${h}h ${m}m`;
+      if (m > 0) return `${m}m ${s}s`;
+      return `${s}s`;
+    }
+
+    function renderStats(data) {
+      let statusBadge = '';
+      let statusClass = '';
+
+      if (data.status === 'running' || data.status === 'online' || data.online === true || data.alive === true) {
+        statusBadge = '<span class="badge badge-live"><span class="badge-dot"></span>Online</span>';
+        statusClass = 'online';
+      } else if (data.status === 'offline' || data.online === false || data.alive === false) {
+        statusBadge = '<span class="badge badge-offline">Offline</span>';
+        statusClass = 'offline';
+      } else {
+        statusBadge = '<span class="badge badge-loading"><span class="badge-dot"></span>Unknown</span>';
+        statusClass = 'warn';
+      }
+
+      const stats = [];
+
+      if (data.fps !== undefined) {
+        stats.push({ label: 'Frame Rate', value: data.fps + ' fps', class: '' });
+      }
+
+      if (data.speed !== undefined) {
+        const speedClass = data.speed < 0.95 || data.speed > 1.05 ? 'warn' : 'online';
+        stats.push({ label: 'Speed', value: data.speed.toFixed(2) + 'x', class: speedClass });
+      }
+
+      if (data.frameCount !== undefined) {
+        stats.push({ label: 'Frames', value: formatNumber(data.frameCount), class: '' });
+      }
+
+      if (data.dupCount !== undefined) {
+        stats.push({ label: 'Dup Frames', value: formatNumber(data.dupCount), class: data.dupCount > 100 ? 'warn' : '' });
+      }
+
+      if (data.recordingsReady !== undefined) {
+        stats.push({ label: 'Recordings', value: formatNumber(data.recordingsReady), class: '' });
+      }
+
+      if (data.remuxQueued !== undefined) {
+        stats.push({ label: 'Remux Queue', value: data.remuxQueued.toString(), class: data.remuxQueued > 5 ? 'warn' : '' });
+      }
+
+      if (data.remuxActive !== undefined) {
+        stats.push({ label: 'Remux Active', value: data.remuxActive.toString(), class: '' });
+      }
+
+      if (stats.length === 0) {
+        const keys = Object.keys(data).slice(0, 8);
+        keys.forEach(key => {
+          const val = data[key];
+          let displayVal = val;
+          if (typeof val === 'number') displayVal = formatNumber(val);
+          else if (typeof val === 'boolean') displayVal = val ? 'Yes' : 'No';
+          else if (typeof val === 'object') displayVal = JSON.stringify(val).substring(0, 20);
+          stats.push({
+            label: key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()),
+            value: displayVal,
+            class: ''
+          });
+        });
+      }
+
+      const statsHtml = stats.map(s => `
+        <div class="stat-item">
+          <div class="stat-label">${s.label}</div>
+          <div class="stat-value ${s.class}">${s.value}</div>
+        </div>
+      `).join('');
+
+      let recordingHtml = '';
+      if (data.remuxCurrentFiles && data.remuxCurrentFiles.length > 0) {
+        recordingHtml = `
+          <div class="recording-info">
+            <div class="recording-label">Current Recording</div>
+            <div class="recording-file">${data.remuxCurrentFiles.join('\n')}</div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="status-card">
+          <div class="status-header">
+            <div class="status-icon">
+              <img src="https://upload.wikimedia.org/wikipedia/en/a/ad/Korean_Central_Television_2005.svg" alt="KCTV" loading="lazy">
+            </div>
+            <div class="status-title-group">
+              <h3>Korean Central Television</h3>
+              <p>Stream server status and real-time metrics</p>
+            </div>
+          </div>
+          <div class="badge-row" style="margin-bottom:4px;">
+            ${statusBadge}
+          </div>
+          <div class="stats-grid">
+            ${statsHtml}
+          </div>
+          ${recordingHtml}
+        </div>
+      `;
+    }
+
+    function renderError(message) {
+      container.innerHTML = `
+        <div class="error-card">
+          <h3>Unable to Fetch Status</h3>
+          <p>${message}</p>
+          <button class="refresh-btn" onclick="fetchStats()" style="margin-top:16px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+            Try Again
+          </button>
+        </div>
+      `;
+    }
+
+    async function fetchStats() {
+      refreshBtn.classList.add('spinning');
+      refreshBtn.disabled = true;
+
+      try {
+        const response = await fetch(API_URL, {
+          method: 'GET',
+          headers: { 'Accept': 'application/json' },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        renderStats(data);
+      } catch (error) {
+        console.error('Fetch error:', error);
+        renderError(error.message);
+      } finally {
+        refreshBtn.classList.remove('spinning');
+        refreshBtn.disabled = false;
+      }
+    }
+
+    fetchStats();
+  </script>
+</body>
+</html>
